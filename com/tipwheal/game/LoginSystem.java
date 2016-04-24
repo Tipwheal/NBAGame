@@ -43,9 +43,8 @@ public class LoginSystem {
 				System.out.println("Please enter yout password");
 				String password = reader.readLine();
 				if (checkPassword(name, password)) {
-					saveInfo();
 					Game game = new Game();
-					game.start();
+					game.start(name);
 				} else {
 					System.out.println("wrong password.");
 					login();
@@ -64,8 +63,8 @@ public class LoginSystem {
 		try {
 			System.out.println("Please enter your user name:(only characters permitted)");
 			String name = reader.readLine();
-			if (name.matches("[A-Z|a-z]+")) {
-				System.out.println("wrong uname.");
+			if (!name.matches("[A-Z|a-z]+")) {
+				System.out.println("wrong name.");
 				create();
 			} else if (accounts.contains(name)) {
 				System.out.println("the account is existed.");
@@ -73,8 +72,11 @@ public class LoginSystem {
 			} else {
 				System.out.println("Please enter your password:");
 				String password = reader.readLine();
+				accounts.add(name);
 				map.put(name, password);
-				System.out.println("ok,you create a new account" + name);
+				System.out.println("ok,you create a new account: " + name);
+				saveInfo();
+				start();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
