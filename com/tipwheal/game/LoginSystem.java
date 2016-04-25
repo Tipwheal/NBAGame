@@ -11,7 +11,7 @@ public class LoginSystem {
 		new LoginSystem().start();
 	}
 
-	private void start() {
+	public void start() {
 		loadInfo();
 		System.out.println("a. log in");
 		System.out.println("b. create new account");
