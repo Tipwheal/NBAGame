@@ -5,15 +5,15 @@ import java.io.*;
 public class Game {
 	private Account account;
 	private String accountName;
-	
+
 	public void start(String name) {
 		accountName = name;
 		start();
 	}
-	
+
 	public void start() {
 		loadInfo();
-		while(true) {
+		while (true) {
 			System.out.println("a. start a random game");
 			System.out.println("b. create new enemies");
 			System.out.println("c. hire players");
@@ -24,7 +24,7 @@ public class Game {
 			try {
 				BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 				String input = reader.readLine();
-				switch(input) {
+				switch (input) {
 				case "a":
 					startRandomGame();
 				case "b":
@@ -42,61 +42,61 @@ public class Game {
 				case "g":
 					return;
 				}
-			}catch(IOException e) {
+			} catch (IOException e) {
 				System.out.println("Wrong input");
 				start();
 			}
 		}
 	}
-	
+
 	private void loadInfo() {
 		try {
 			File file = new File(accountName + ".ser");
-			if(!file.exists()) {
+			if (!file.exists()) {
 				createNewAccount();
 			}
 			ObjectInputStream is = new ObjectInputStream(new FileInputStream(file));
-			account = (Account)is.readObject();
+			account = (Account) is.readObject();
 			is.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void createNewAccount() {
 		account = new Account();
 		saveInfo();
 	}
-	
+
 	private void saveInfo() {
 		try {
 			File file = new File(accountName + ".ser");
 			ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(file));
 			os.writeObject(account);
 			os.close();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void startRandomGame() {
-		if(account.getTeam().numOfMembers() < 10) {
+		if (account.getTeam().numOfMembers() < 10) {
 			System.out.println("Sorry,you have not enough players,hire some first please.");
 			start();
-		}else if(account.getEnemies().length == 0) {
-			
+		} else if (account.getEnemies().length == 0) {
+
 		}
 	}
-	
+
 	private void createNewEnemies() {
-		
+
 	}
-	
+
 	private void hirePlayers() {
-		
+
 	}
-	
+
 	private void firePlayers() {
-		
+
 	}
 }
