@@ -31,9 +31,9 @@ public class LoginSystem {
 
 	private void login() {
 		String name = helper.getInputString("please enter your name:");
-		if (checkName(name)) {
+		if (map.containsKey(name)) {
 			String password = helper.getInputString("Please enter yout password");
-			if (checkPassword(name, password)) {
+			if (map.get(name).equals(password)) {
 				Game game = new Game();
 				game.start(name);
 			} else {
@@ -95,27 +95,11 @@ public class LoginSystem {
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 			for (String name : map.keySet()) {
-				writer.append(name + " " + map.get(map) + "\r\n");
+				writer.append(name + " " + map.get(name) + "\r\n");
 			}
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-	}
-
-	private boolean checkName(String name) {
-		if (map.containsKey(name)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	private boolean checkPassword(String name, String password) {
-		if (password.equals(map.get(name))) {
-			return true;
-		} else {
-			return false;
 		}
 	}
 }

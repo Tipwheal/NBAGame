@@ -5,6 +5,11 @@ import java.io.*;
 public class Game {
 	private Account account;
 	private String accountName;
+	private IOHelper helper;
+
+	public Game() {
+		helper = new IOHelper();
+	}
 
 	public void start(String name) {
 		accountName = name;
@@ -21,30 +26,23 @@ public class Game {
 			System.out.println("e. reset account");
 			System.out.println("f. log out");
 			System.out.println("g. exit");
-			try {
-				BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-				String input = reader.readLine();
-				switch (input) {
-				case "a":
-					startRandomGame();
-				case "b":
-					createNewEnemies();
-				case "c":
-					hirePlayers();
-				case "d":
-					firePlayers();
-				case "e":
-					account = new Account();
-					start();
-				case "f":
-					saveInfo();
-					new LoginSystem().start();
-				case "g":
-					return;
-				}
-			} catch (IOException e) {
-				System.out.println("Wrong input");
+			switch (helper.getInputString()) {
+			case "a":
+				startRandomGame();
+			case "b":
+				createNewEnemies();
+			case "c":
+				hirePlayers();
+			case "d":
+				firePlayers();
+			case "e":
+				account = new Account();
 				start();
+			case "f":
+				saveInfo();
+				new LoginSystem().start();
+			case "g":
+				return;
 			}
 		}
 	}

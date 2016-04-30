@@ -9,7 +9,6 @@ public class IOHelper {
 		String result = null;
 		try {
 			result = reader.readLine();
-			reader.close();
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
