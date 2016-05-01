@@ -14,4 +14,8 @@ public class Team implements Serializable {
 	public int getScore() {
 		return score;
 	}
+	
+	public void playWith(Team anotherTeam) {
+		
+	}
 }

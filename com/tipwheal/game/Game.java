@@ -1,100 +1,83 @@
 package com.tipwheal.game;
 
 import java.io.*;
+import java.util.*;
 
-public class Game {
-	private Account account;
+public class Game implements Serializable {
+	private static final long serialVersionUID = 4856726220909906056L;
 	private String accountName;
+	private Account account;
 	private IOHelper helper;
-
-	public Game() {
+	
+	public Game(String accountName) {
+		this.accountName = accountName;
 		helper = new IOHelper();
 	}
 
-	public void start(String name) {
-		accountName = name;
-		start();
-	}
-
 	public void start() {
-		loadInfo();
-		while (true) {
-			System.out.println("a. start a random game");
-			System.out.println("b. create new enemies");
-			System.out.println("c. hire players");
-			System.out.println("d. fire players");
-			System.out.println("e. reset account");
-			System.out.println("f. log out");
-			System.out.println("g. exit");
-			switch (helper.getInputString()) {
-			case "a":
-				startRandomGame();
-			case "b":
-				createNewEnemies();
-			case "c":
-				hirePlayers();
-			case "d":
-				firePlayers();
-			case "e":
-				account = new Account();
-				start();
-			case "f":
-				saveInfo();
-				new LoginSystem().start();
-			case "g":
-				return;
-			}
+		loadAccount();
+		System.out.println("next. next game");
+		System.out.println("team. check team");
+		System.out.println("quit. quit");
+		switch(helper.getInputString().toLowerCase()) {
+		case "next":
+			nextGame();
+		case "team":
+		case "quit":
 		}
 	}
-
-	private void loadInfo() {
-		try {
-			File file = new File(accountName + ".ser");
-			if (!file.exists()) {
-				createNewAccount();
-			}
-			ObjectInputStream is = new ObjectInputStream(new FileInputStream(file));
-			account = (Account) is.readObject();
-			is.close();
-		} catch (Exception e) {
-			e.printStackTrace();
+	
+	private void loadAccount() {
+		File file = new File("accounts.ser");
+		if (!file.exists()) {
+			account = new Account(accountName);
+			saveAccount();
+			start();
 		}
-	}
-
-	private void createNewAccount() {
-		account = new Account();
-		saveInfo();
-	}
-
-	private void saveInfo() {
 		try {
-			File file = new File(accountName + ".ser");
-			ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(file));
-			os.writeObject(account);
+			ObjectInputStream os = new ObjectInputStream(new FileInputStream(file));
+			while (true) {
+				Account account = (Account) os.readObject();
+				if (account.equals(accountName)) {
+					this.account = account;
+					break;
+				}
+			}
 			os.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
-	private void startRandomGame() {
-		if (account.getTeam().numOfMembers() < 10) {
-			System.out.println("Sorry,you have not enough players,hire some first please.");
-			start();
-		} else if (account.getEnemies().length == 0) {
-
+	
+	private void saveAccount() {
+		File file = new File("accounts.ser");
+		ArrayList<Account> all = new ArrayList<>();
+		try {
+			ObjectInputStream is = new ObjectInputStream(new FileInputStream(file));
+			while(true) {
+				Object temp = is.readObject();
+				if(temp == null) {
+					break;
+				}
+				all.add((Account)temp);
+			}
+			is.close();
+			ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(file));
+			for(Account account:all) {
+				if(account.getName().equals(accountName)) {
+					all.remove(account);
+					all.add(this.account);
+					break;
+				}
+				os.writeObject(account);
+			}
+			os.close();
+		}catch(Exception e) {
+			e.printStackTrace();
 		}
 	}
-
-	private void createNewEnemies() {
-
-	}
-
-	private void hirePlayers() {
-
-	}
-
-	private void firePlayers() {
-
+	
+	private void nextGame() {
+		account.getTeam().playWith(new Team());
 	}
 }
