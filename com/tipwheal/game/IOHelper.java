@@ -19,4 +19,5 @@ public class IOHelper {
 		System.out.println(prompt);
 		return getInputString();
 	}
+	
 }

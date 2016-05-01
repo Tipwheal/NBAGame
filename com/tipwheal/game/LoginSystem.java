@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 
 public class LoginSystem {
-	private Map<String, String> map = new HashMap<String, String>();
+	private Map<String, String> account = new HashMap<String, String>();
 	private IOHelper helper = new IOHelper();
 
 	public static void main(String[] args) {
@@ -31,11 +31,11 @@ public class LoginSystem {
 
 	private void login() {
 		String name = helper.getInputString("please enter your name:");
-		if (map.containsKey(name)) {
+		if (account.containsKey(name)) {
 			String password = helper.getInputString("Please enter yout password");
-			if (map.get(name).equals(password)) {
-				Game game = new Game();
-				game.start(name);
+			if (account.get(name).equals(password)) {
+				Game game = new Game(name);
+				game.start();
 			} else {
 				System.out.println("wrong password.");
 				login();
@@ -51,12 +51,12 @@ public class LoginSystem {
 		if (!name.matches("[A-Z|a-z]+")) {
 			System.out.println("wrong name.");
 			create();
-		} else if (map.containsKey(name)) {
+		} else if (account.containsKey(name)) {
 			System.out.println("the account is existed.");
 			create();
 		} else {
 			String password = helper.getInputString("Please enter your password:");
-			map.put(name, password);
+			account.put(name, password);
 			System.out.println("ok,you create a new account: " + name);
 			saveInfo();
 			start();
@@ -65,7 +65,7 @@ public class LoginSystem {
 
 	private void delete() {
 		String name = helper.getInputString("Please enter account name to delete.");
-		map.remove(name);
+		account.remove(name);
 		saveInfo();
 		start();
 	}
@@ -82,7 +82,7 @@ public class LoginSystem {
 				if (input == null) {
 					break;
 				}
-				map.put(input.split(" ")[0], input.split(" ")[1]);
+				account.put(input.split(" ")[0], input.split(" ")[1]);
 			}
 			reader.close();
 		} catch (Exception e) {
@@ -94,8 +94,8 @@ public class LoginSystem {
 		File file = new File("accounts.txt");
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-			for (String name : map.keySet()) {
-				writer.append(name + " " + map.get(name) + "\r\n");
+			for (String name : account.keySet()) {
+				writer.append(name + " " + account.get(name) + "\r\n");
 			}
 			writer.close();
 		} catch (IOException e) {
