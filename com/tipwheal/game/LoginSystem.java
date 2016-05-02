@@ -34,7 +34,7 @@ public class LoginSystem {
 		if (account.containsKey(name)) {
 			String password = helper.getInputString("Please enter yout password");
 			if (account.get(name).equals(password)) {
-				Game game = new Game(name);
+				MainSystem game = new MainSystem(name);
 				game.start();
 			} else {
 				System.out.println("wrong password.");
