@@ -3,15 +3,16 @@ package com.tipwheal.game;
 import java.io.*;
 import java.util.*;
 
-public class Game implements Serializable {
-	private static final long serialVersionUID = 4856726220909906056L;
+public class MainSystem {
 	private String accountName;
 	private Account account;
 	private IOHelper helper;
+	private BallGameManager manager;
 	
-	public Game(String accountName) {
+	public MainSystem(String accountName) {
 		this.accountName = accountName;
 		helper = new IOHelper();
+		manager = new BallGameManager();
 	}
 
 	public void start() {
@@ -23,7 +24,11 @@ public class Game implements Serializable {
 		case "next":
 			nextGame();
 		case "team":
+			checkTeam();
 		case "quit":
+			return;
+		default:
+			start();
 		}
 	}
 	
@@ -78,6 +83,21 @@ public class Game implements Serializable {
 	}
 	
 	private void nextGame() {
-		account.getTeam().playWith(new Team());
+		manager.getNextGame();
+		System.out.println("Next Game you play with " + manager.enemy().getName());
+		System.out.println("And " + manager.homeTeam() + " is home team");
+		System.out.println("enter 'y' to start");
+		if(helper.getInputString().equals("y")) {
+			account.getTeam().playWith(manager.enemy());
+		}else {
+			System.out.println("you didn't play the game");
+			saveAccount();
+			start();
+		}
+		manager.showResult();
+	}
+	
+	private void checkTeam() {
+		
 	}
 }
