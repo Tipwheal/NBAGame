@@ -1,6 +1,7 @@
 package com.tipwheal.game;
 
 import java.io.*;
+import java.util.*;
 
 public class IOHelper {
 
@@ -20,19 +21,13 @@ public class IOHelper {
 		return getInputString();
 	}
 
+	@SuppressWarnings("unchecked")
 	public <E> boolean contains(File file, Class<E> object) {
 		try {
 			ObjectInputStream is = new ObjectInputStream(new FileInputStream(file));
-			while (true) {
-				E temp = (E) is.readObject();
-				if (temp == null) {
-					break;
-				}
-				if (object.equals(temp)) {
-					return true;
-				}
-			}
+			TreeSet<E> set = (TreeSet<E>) is.readObject();
 			is.close();
+			return set.contains(object);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
