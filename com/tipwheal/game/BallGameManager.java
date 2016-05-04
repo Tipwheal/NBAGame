@@ -9,50 +9,50 @@ public class BallGameManager {
 	private Team homeTeam;
 	private Team visitor;
 	private BallGame game;
-	
+
 	public BallGameManager(Account account) {
 		this.account = account;
 		allTeams = new ArrayList<>();
-		try{
+		try {
 			ObjectInputStream is = new ObjectInputStream(new FileInputStream("teams.ser"));
-			for(int i = 0;i<30;i++) {
-				Team temp = (Team)is.readObject();
-				if(!temp.getName().equals(this.account.getTeam().getName())) {
+			for (int i = 0; i < 30; i++) {
+				Team temp = (Team) is.readObject();
+				if (!temp.getName().equals(this.account.getTeam().getName())) {
 					allTeams.add((temp));
 				}
 			}
 			is.close();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void getNextGame() {
-		if(!game.getPlayed()) {
+		if (!game.getPlayed()) {
 			return;
 		}
 		game = new BallGame();
-		int ran = (int)(Math.random()*allTeams.size());
+		int ran = (int) (Math.random() * allTeams.size());
 		Team another = allTeams.get(ran);
-		ran = (int)(Math.random()+0.5);
-		if(ran==1) {
+		ran = (int) (Math.random() + 0.5);
+		if (ran == 1) {
 			visitor = another;
 			homeTeam = account.getTeam();
-		}else {
+		} else {
 			visitor = account.getTeam();
 			homeTeam = another;
 		}
 	}
-	
+
 	public Team getVisitor() {
 		return visitor;
 	}
-	
+
 	public Team getHomeTeam() {
 		return homeTeam;
 	}
-	
+
 	public void showResult() {
-		
+		game.showResult();
 	}
 }

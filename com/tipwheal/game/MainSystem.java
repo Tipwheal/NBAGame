@@ -8,7 +8,7 @@ public class MainSystem {
 	private Account account;
 	private IOHelper helper;
 	private BallGameManager manager;
-	
+
 	public MainSystem(String accountName) {
 		this.accountName = accountName;
 		helper = new IOHelper();
@@ -20,7 +20,7 @@ public class MainSystem {
 		System.out.println("next. next game");
 		System.out.println("team. check team");
 		System.out.println("quit. quit");
-		switch(helper.getInputString().toLowerCase()) {
+		switch (helper.getInputString().toLowerCase()) {
 		case "next":
 			nextGame();
 		case "team":
@@ -31,7 +31,7 @@ public class MainSystem {
 			start();
 		}
 	}
-	
+
 	private void loadAccount() {
 		File file = new File("accounts.ser");
 		if (!file.exists()) {
@@ -53,23 +53,23 @@ public class MainSystem {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void saveAccount() {
 		File file = new File("accounts.ser");
 		ArrayList<Account> all = new ArrayList<>();
 		try {
 			ObjectInputStream is = new ObjectInputStream(new FileInputStream(file));
-			while(true) {
+			while (true) {
 				Object temp = is.readObject();
-				if(temp == null) {
+				if (temp == null) {
 					break;
 				}
-				all.add((Account)temp);
+				all.add((Account) temp);
 			}
 			is.close();
 			ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(file));
-			for(Account account:all) {
-				if(account.getName().equals(accountName)) {
+			for (Account account : all) {
+				if (account.getName().equals(accountName)) {
 					all.remove(account);
 					all.add(this.account);
 					break;
@@ -77,27 +77,27 @@ public class MainSystem {
 				os.writeObject(account);
 			}
 			os.close();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void nextGame() {
 		manager.getNextGame();
 		System.out.println("Next Game you play with " + manager.getVisitor().getName());
 		System.out.println("And " + manager.getHomeTeam() + " is home team");
 		System.out.println("enter 'y' to start");
-		if(helper.getInputString().equals("y")) {
+		if (helper.getInputString().equals("y")) {
 			account.getTeam().playWith(manager.getVisitor());
-		}else {
+		} else {
 			System.out.println("you didn't play the game");
 			saveAccount();
 			start();
 		}
 		manager.showResult();
 	}
-	
+
 	private void checkTeam() {
-		
+
 	}
 }

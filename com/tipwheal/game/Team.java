@@ -15,20 +15,20 @@ public class Team implements Serializable {
 	public int getScore() {
 		return score;
 	}
-	
+
 	public void playWith(Team another) {
 		score = 0;
 		another.score = 0;
-		for(Player player:members) {
+		for (Player player : members) {
 			player.playAGame();
 			score += player.getScore();
 		}
-		for(Player player:another.members) {
+		for (Player player : another.members) {
 			player.playAGame();
 			another.score += player.getScore();
 		}
 	}
-	
+
 	public String getName() {
 		return name;
 	}
