@@ -7,11 +7,11 @@ public class Player implements Serializable {
 	private int serveTime;
 	private int score;
 	private int ability;
-	
+
 	public Player() {
 		ability = 3;
 	}
-	
+
 	public void setAbility(int ability) {
 		this.ability = ability;
 	}
@@ -23,14 +23,14 @@ public class Player implements Serializable {
 	public void setServeTime(int serveTime) {
 		this.serveTime = serveTime;
 	}
-	
+
 	public int getScore() {
 		return score;
 	}
-	
+
 	public void playAGame() {
-		int ran1 = (int)(Math.random()*6 + 0.5);
-		int ran2 = (int)(Math.random()*6 + 0.5);
-		score = ran1*ability+ran2;
+		int ran1 = (int) (Math.random() * 6 + 0.5);
+		int ran2 = (int) (Math.random() * 6 + 0.5);
+		score = ran1 * ability + ran2;
 	}
 }
