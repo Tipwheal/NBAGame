@@ -12,7 +12,7 @@ public class MainSystem {
 	public MainSystem(String accountName) {
 		this.accountName = accountName;
 		helper = new IOHelper();
-		manager = new BallGameManager();
+		manager = new BallGameManager(account);
 	}
 
 	public void start() {
@@ -84,11 +84,11 @@ public class MainSystem {
 	
 	private void nextGame() {
 		manager.getNextGame();
-		System.out.println("Next Game you play with " + manager.enemy().getName());
-		System.out.println("And " + manager.homeTeam() + " is home team");
+		System.out.println("Next Game you play with " + manager.getVisitor().getName());
+		System.out.println("And " + manager.getHomeTeam() + " is home team");
 		System.out.println("enter 'y' to start");
 		if(helper.getInputString().equals("y")) {
-			account.getTeam().playWith(manager.enemy());
+			account.getTeam().playWith(manager.getVisitor());
 		}else {
 			System.out.println("you didn't play the game");
 			saveAccount();
