@@ -10,17 +10,13 @@ public class BallGameManager {
 	private Team visitor;
 	private BallGame game;
 
+	@SuppressWarnings("unchecked")
 	public BallGameManager(Account account) {
 		this.account = account;
 		allTeams = new ArrayList<>();
 		try {
 			ObjectInputStream is = new ObjectInputStream(new FileInputStream("teams.ser"));
-			for (int i = 0; i < 30; i++) {
-				Team temp = (Team) is.readObject();
-				if (!temp.getName().equals(this.account.getTeam().getName())) {
-					allTeams.add((temp));
-				}
-			}
+			allTeams = (ArrayList<Team>) is.readObject();
 			is.close();
 		} catch (Exception e) {
 			e.printStackTrace();
