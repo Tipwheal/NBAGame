@@ -3,21 +3,15 @@ package com.tipwheal.game;
 import java.io.*;
 import java.util.*;
 
+@SuppressWarnings("unchecked")
 public class TeamManager {
 	private static ArrayList<String> teams;
 
 	static {
-		teams = new ArrayList<>();
 		try {
-			BufferedReader reader = new BufferedReader(new FileReader("teams.txt"));
-			while (true) {
-				String team = reader.readLine();
-				if (team == null) {
-					break;
-				}
-				teams.add(team);
-			}
-			reader.close();
+			ObjectInputStream is = new ObjectInputStream(new FileInputStream("teamNames.ser"));
+			teams = (ArrayList<String>) is.readObject();
+			is.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
