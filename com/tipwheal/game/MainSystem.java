@@ -9,6 +9,13 @@ public class MainSystem {
 	private IOHelper helper;
 	private BallGameManager manager;
 
+	/**
+	 * Creater for MainSystem
+	 * 
+	 * @param accountName
+	 *            <p>
+	 *            account's name
+	 */
 	public MainSystem(String accountName) {
 		this.accountName = accountName;
 		helper = new IOHelper();
