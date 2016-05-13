@@ -13,28 +13,29 @@ public class LoginSystem {
 
 	/**
 	 * load all accounts' info and start the game
-	 * get input and switch
-	 * and jump to
-	 * log in
-	 * create new account
-	 * delete account
+	 * <p>
+	 * get input and switch<br>
+	 * then jump to
+	 * <p>
+	 * log in<br>
+	 * create new account<br>
+	 * delete account<br>
 	 * show all accounts
 	 */
 	public void start() {
 		loadInfo();
-		System.out.println("a. log in");
-		System.out.println("b. create new account");
-		System.out.println("c. delete account");
-		System.out.println("show. show all accounts");
+		System.out.print("LoginSystem: ");
 		switch (helper.getInputString().toLowerCase()) {
-		case "a":
+		case "login":
 			login();
-		case "b":
+		case "create":
 			create();
-		case "c":
+		case "delete":
 			delete();
 		case "show":
 			show();
+		case "help":
+			help();
 		default:
 			System.out.println("Wrong input");
 			start();
@@ -42,8 +43,8 @@ public class LoginSystem {
 	}
 
 	/**
-	 * get name and password and check
-	 * if wrong name jump to start
+	 * get name and password and check<br>
+	 * if wrong name jump to start<br>
 	 * if wrong password login() again
 	 */
 	private void login() {
@@ -64,10 +65,11 @@ public class LoginSystem {
 	}
 
 	/**
-	 * creat an new account and save to "accounts.ser"
-	 * if already exist,jump to start
-	 * if wrong format,create again
-	 * create an new account and save then start()
+	 * creat an new account and save to "accounts.ser"<br>
+	 * if already exist,jump to start<br>
+	 * if wrong format,create again<br>
+	 * create an new account and save<br>
+	 * then start()
 	 */
 	private void create() {
 		String name = helper.getInputString("Please enter your user name:(only characters permitted)");
@@ -87,17 +89,27 @@ public class LoginSystem {
 	}
 
 	/**
-	 * enter account name
-	 * enter password
-	 * if right name enter password
-	 * if wrong name jump to start
+	 * enter account name<br>
+	 * enter password<br>
+	 * if right name enter password<br>
+	 * if wrong name jump to start<br>
 	 * wrong password delete() again
 	 */
 	private void delete() {
 		String name = helper.getInputString("Please enter account name to delete.");
-		account.remove(name);
-		saveInfo();
-		start();
+		if (account.containsKey(name)) {
+			String password = helper.getInputString("Please enter the password");
+			if (password.equals(account.get(name))) {
+				account.remove(name);
+				saveInfo();
+			} else {
+				System.out.println("Sorry, wrong password.");
+				delete();
+			}
+		} else {
+			System.out.println("No such account.");
+			start();
+		}
 	}
 
 	/**
@@ -112,21 +124,31 @@ public class LoginSystem {
 				saveInfo();
 			}
 			ObjectInputStream is = new ObjectInputStream(new FileInputStream(file));
-			account = (HashMap<String,String>)is.readObject();
+			account = (HashMap<String, String>) is.readObject();
 			is.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * show all accounts' name
 	 */
 	private void show() {
-		for(String name:account.keySet()) {
+		for (String name : account.keySet()) {
 			System.out.println(name);
 		}
 		start();
+	}
+
+	/**
+	 * show all commands
+	 */
+	private void help() {
+		String[] list = { "login", "help", "create", "delete", "show" };
+		for (String string : list) {
+			System.out.println(string);
+		}
 	}
 
 	/**
