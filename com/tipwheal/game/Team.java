@@ -3,47 +3,71 @@ package com.tipwheal.game;
 import java.io.*;
 import java.util.*;
 
+/**
+ * Team.<br>
+ * contains name, members, score.
+ * 
+ * @author Administrator
+ *
+ */
 public class Team implements Serializable {
 	private static final long serialVersionUID = -4808909708684777814L;
 	private String name;
-	private Player[] members;
+	private ArrayList<Player> members = new ArrayList<>();
+	private Player[] mMember = new Player[5];
 	private int score;
 
+	/**
+	 * return num of members.
+	 * 
+	 * @return
+	 */
 	public int numOfMembers() {
-		return members.length;
+		return members.size();
 	}
 
+	/**
+	 * getter for score.
+	 * 
+	 * @return
+	 */
 	public int getScore() {
 		return score;
 	}
 
+	/**
+	 * play with another team.
+	 * 
+	 * @param another
+	 */
 	public void playWith(Team another) {
-		initAGame();
-		another.initAGame();
-		Random random = new Random();
-		for (int i = 0; i < 100; i++) {
-			int index = random.nextInt(members.length);
-			double interferenceA = members[index].getDefence() * 0.1;
-			double interferenceB = another.members[index].getDefence() * 0.1;
-			double hitRateA = members[index].getAbility() * 0.1 * (1 - interferenceB);
-			double hitRateB = another.members[index].getAbility() * 0.1 * (1 - interferenceA);
-			boolean shootedA = hitRateA >= random.nextDouble();
-			boolean shootedB = hitRateB >= random.nextDouble();
-			int scoreA = shootedA ? random.nextDouble() >= 0.7 ? 3 : 2 : 0;
-			int scoreB = shootedB ? random.nextDouble() >= 0.7 ? 3 : 2 : 0;
-			members[index].addScore(scoreA);
-			another.members[index].addScore(scoreB);
+		this.score = 0;
+		another.score = 0;
+		for (int i = 0; i < 5; i++) {
+			this.mMember[i].play(another.mMember[i]);
+			this.score += this.mMember[i].getScore();
+			another.score += another.mMember[i].getScore();
 		}
 	}
 
+	/**
+	 * getter for name.
+	 * 
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}
 
-	private void initAGame() {
-		score = 0;
-		for (Player p : members) {
-			p.setScore(0);
+	/**
+	 * setter for mMember.
+	 * 
+	 * @param p
+	 */
+	public void setMMember(int[] p) {
+		for (int i = 0; i < 5; i++) {
+			mMember[i] = members.get(p[i]);
 		}
 	}
+
 }

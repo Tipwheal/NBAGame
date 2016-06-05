@@ -3,6 +3,13 @@ package com.tipwheal.game;
 import java.io.*;
 import java.util.*;
 
+/**
+ * Main system.<br>
+ * contains accountName, account, helper, manager.
+ * 
+ * @author Administrator
+ *
+ */
 public class MainSystem {
 	private String accountName;
 	private Account account;
@@ -22,6 +29,9 @@ public class MainSystem {
 		manager = new BallGameManager(account);
 	}
 
+	/**
+	 * start.
+	 */
 	public void start() {
 		loadAccount();
 		System.out.println("next. next game");
@@ -39,6 +49,9 @@ public class MainSystem {
 		}
 	}
 
+	/**
+	 * load account.
+	 */
 	private void loadAccount() {
 		File file = new File("accounts.ser");
 		if (!file.exists()) {
@@ -61,6 +74,9 @@ public class MainSystem {
 		}
 	}
 
+	/**
+	 * save account.
+	 */
 	private void saveAccount() {
 		File file = new File("accounts.ser");
 		ArrayList<Account> all = new ArrayList<>();
@@ -89,6 +105,9 @@ public class MainSystem {
 		}
 	}
 
+	/**
+	 * get next game.
+	 */
 	private void nextGame() {
 		manager.getNextGame();
 		System.out.println("Next Game you play with " + manager.getVisitor().getName());
@@ -104,7 +123,11 @@ public class MainSystem {
 		manager.showResult();
 	}
 
-	private void checkTeam() {
+	/**
+	 * check team.
+	 */
+	public void checkTeam() {
 
 	}
+
 }

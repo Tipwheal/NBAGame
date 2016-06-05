@@ -3,8 +3,19 @@ package com.tipwheal.game;
 import java.io.*;
 import java.util.*;
 
+/**
+ * IOHelper.
+ * 
+ * @author Administrator
+ *
+ */
 public class IOHelper {
 
+	/**
+	 * get input string.
+	 * 
+	 * @return the input string.
+	 */
 	public String getInputString() {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		String result = null;
@@ -16,11 +27,26 @@ public class IOHelper {
 		return result;
 	}
 
+	/**
+	 * get input String with prompt.
+	 * 
+	 * @param prompt
+	 * @return the input string.
+	 */
 	public String getInputString(String prompt) {
 		System.out.println(prompt);
 		return getInputString();
 	}
 
+	/**
+	 * scan a file and check if it contains an object.
+	 * 
+	 * @param file
+	 *            the file
+	 * @param object
+	 *            the object
+	 * @return true or false
+	 */
 	@SuppressWarnings("unchecked")
 	public <E> boolean contains(File file, Class<E> object) {
 		try {
