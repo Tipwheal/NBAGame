@@ -3,6 +3,13 @@ package com.tipwheal.game;
 import java.util.*;
 import java.io.*;
 
+/**
+ * Ball Game Manager.<br>
+ * contains account, teams, hometeam, visitor, game.
+ * 
+ * @author Administrator
+ *
+ */
 public class BallGameManager {
 	private ArrayList<Team> allTeams;
 	private Account account;
@@ -10,6 +17,11 @@ public class BallGameManager {
 	private Team visitor;
 	private BallGame game;
 
+	/**
+	 * constructor.
+	 * 
+	 * @param account
+	 */
 	@SuppressWarnings("unchecked")
 	public BallGameManager(Account account) {
 		this.account = account;
@@ -23,6 +35,9 @@ public class BallGameManager {
 		}
 	}
 
+	/**
+	 * get next game.
+	 */
 	public void getNextGame() {
 		if (!game.getPlayed()) {
 			return;
@@ -40,14 +55,27 @@ public class BallGameManager {
 		}
 	}
 
+	/**
+	 * getter for visitor.
+	 * 
+	 * @return
+	 */
 	public Team getVisitor() {
 		return visitor;
 	}
 
+	/**
+	 * getter for homeTeam.
+	 * 
+	 * @return
+	 */
 	public Team getHomeTeam() {
 		return homeTeam;
 	}
 
+	/**
+	 * show result.
+	 */
 	public void showResult() {
 		game.showResult();
 	}
