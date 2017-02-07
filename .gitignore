@@ -71,3 +71,5 @@ NBAGame.iml
 
 # out files
 out/
+
+*.xml
