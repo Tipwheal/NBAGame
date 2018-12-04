@@ -7,18 +7,19 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/test")
+@RequestMapping("/player")
 class BasketPlayerController {
 
     @Autowired
-    BasketPlayerService testService
+    BasketPlayerService basketPlayerService
 
-    @PostMapping
+    @PostMapping("/all")
     List findAllPlayer() {
-        return testService.getAllPlayers()
+        return basketPlayerService.getAllPlayers()
     }
 
+    @PostMapping("/random")
     void createRandomPlayer() {
-
+        basketPlayerService.createRandomBasketPlayer()
     }
 }

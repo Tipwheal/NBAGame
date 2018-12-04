@@ -17,7 +17,11 @@ class GlobalInfoService {
 
     void resetGlobalInfo() {
         globalInfoDao.deleteAll()
-        def year = new GlobalInfo(description: "year", value: "2018")
+        def year = new GlobalInfo(description: "currentYear", value: "2018")
         globalInfoDao.save year
+    }
+
+    int getCurrentYear() {
+        globalInfoDao.findById("currentYear").get().intValue
     }
 }

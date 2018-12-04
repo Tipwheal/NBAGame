@@ -1,22 +1,21 @@
 package com.tipwheal.obscurephoton.data.model
 
-import com.tipwheal.obscurephoton.util.GlobalInfoPool
 import lombok.Builder
 
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
+import javax.persistence.OneToMany
 
 @Entity
-class BasketPlayer {
+class BasketTeam {
 
     @Id
     @GeneratedValue
     long id
-    String name
-    int bornYear
 
-    int getAge() {
-        GlobalInfoPool.currentYear - bornYear
-    }
+    String name
+
+    @OneToMany
+    List<BasketPlayer> playerList
 }
