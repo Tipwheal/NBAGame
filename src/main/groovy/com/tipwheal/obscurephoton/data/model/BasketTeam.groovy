@@ -5,6 +5,7 @@ import lombok.Builder
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
+import javax.persistence.JoinColumn
 import javax.persistence.OneToMany
 
 @Entity
@@ -17,5 +18,6 @@ class BasketTeam {
     String name
 
     @OneToMany
+    @JoinColumn(name="team_id")
     List<BasketPlayer> playerList
 }

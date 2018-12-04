@@ -4,8 +4,13 @@ import org.hibernate.dialect.Dialect;
 import org.hibernate.dialect.function.SQLFunctionTemplate;
 import org.hibernate.dialect.function.StandardSQLFunction;
 import org.hibernate.dialect.function.VarArgsSQLFunction;
+import org.hibernate.dialect.pagination.LimitHandler;
+import org.hibernate.dialect.pagination.LimitHelper;
+import org.hibernate.engine.spi.RowSelection;
 import org.hibernate.type.StringType;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.Types;
 
 /**
@@ -58,14 +63,47 @@ public class SqLiteDialect extends Dialect {
         return "select last_insert_rowid()";
     }
 
-    public boolean supportsLimit() {
-        return true;
+    @Override
+    public LimitHandler getLimitHandler() {
+        return new LimitHandler() {
+            @Override
+            public boolean supportsLimit() {
+                return true;
+            }
+
+            @Override
+            public boolean supportsLimitOffset() {
+                return true;
+            }
+
+            @Override
+            public String processSql(String sql, RowSelection selection) {
+                final boolean hasOffset = LimitHelper.hasFirstRow( selection );
+                return sql + (hasOffset ? " limit ? offset ?" : " limit ?");
+            }
+
+            @Override
+            public int bindLimitParametersAtStartOfQuery(RowSelection selection, PreparedStatement statement, int index) throws SQLException {
+                return 0;
+            }
+
+            @Override
+            public int bindLimitParametersAtEndOfQuery(RowSelection selection, PreparedStatement statement, int index) throws SQLException {
+                return 0;
+            }
+
+            @Override
+            public void setMaxRows(RowSelection selection, PreparedStatement statement) throws SQLException {
+
+            }
+        };
     }
 
-    protected String getLimitString(String query, boolean hasOffset) {
-        return query +
-                (hasOffset ? " limit ? offset ?" : " limit ?");
-    }
+//    @Override
+//    protected String getLimitString(String query, boolean hasOffset) {
+//        return query +
+//                (hasOffset ? " limit ? offset ?" : " limit ?");
+//    }
 
     public boolean supportsTemporaryTables() {
         return true;

@@ -25,4 +25,11 @@ class ContractService {
         team.playerList.add(player)
         basketTeamDao.save(team)
     }
+
+    void breakContract(long teamId, long playerId) {
+        def team = basketTeamDao.findById(teamId).get()
+        def player = team.playerList.find { p -> p.id == playerId }
+        team.playerList.remove(player)
+        basketTeamDao.save(team)
+    }
 }

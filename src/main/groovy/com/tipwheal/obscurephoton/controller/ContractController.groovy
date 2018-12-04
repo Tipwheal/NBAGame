@@ -15,8 +15,13 @@ class ContractController {
     @Autowired
     ContractService contractService
 
-    @PostMapping
+    @PostMapping("/make")
     void makeContract(long teamId, long playerId) {
         contractService.makeContract(teamId, playerId)
+    }
+
+    @PostMapping("/break")
+    void breakContract(long teamId, long playerId) {
+        contractService.breakContract(teamId, playerId)
     }
 }
