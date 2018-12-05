@@ -7,15 +7,15 @@ import javax.persistence.JoinColumn
 import javax.persistence.OneToMany
 
 @Entity
-class BasketTeam {
+class TeamGameInfo {
 
     @Id
     @GeneratedValue
     long id
 
-    String name
+    int score
 
     @OneToMany
-    @JoinColumn(name="team_id")
-    List<PlayerTeamRole> playerList
+    @JoinColumn(name = "team_info_id")
+    List<PlayerGameInfo> playerList
 }

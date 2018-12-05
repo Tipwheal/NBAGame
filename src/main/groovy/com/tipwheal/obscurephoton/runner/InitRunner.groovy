@@ -25,8 +25,12 @@ class InitRunner implements ApplicationRunner {
             def year = new GlobalInfo(description: "currentYear", value: "2018")
             globalInfoDao.save(year)
         }
-        def currentYear = globalInfoDao.findById("currentYear").get().intValue
-        GlobalInfoPool.currentYear = currentYear
+        if (!globalInfoDao.existsById("currentDayOfYear")) {
+            def day = new GlobalInfo(description: "currentDayOfYear", value: 1)
+            globalInfoDao.save(day)
+        }
+        GlobalInfoPool.currentYear = globalInfoDao.findById("currentYear").get().intValue
+        GlobalInfoPool.currentDay = globalInfoDao.findById("currentDayOfYear").get().intValue
         if (basketTeamDao.findAll().size() == 0) {
             def createTeam = {
                 name ->
