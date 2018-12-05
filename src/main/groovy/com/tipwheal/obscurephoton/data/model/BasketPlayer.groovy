@@ -5,7 +5,7 @@ import com.tipwheal.obscurephoton.util.GlobalInfoPool
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
-import javax.persistence.ManyToOne
+import javax.persistence.OneToOne
 
 @Entity
 class BasketPlayer {
@@ -18,16 +18,18 @@ class BasketPlayer {
 
     int bornYear
 
-    @ManyToOne
-    BasketTeam team
+    int scoreAbility
 
-    private BasketTeam getTeam() {
-        team
+    @OneToOne(mappedBy = "player")
+    PlayerTeamRole role
+
+    private PlayerTeamRole getRole() {
+        role
     }
 
     String getTeamName() {
-        if (team != null) {
-            return team.getName()
+        if (role != null) {
+            return role.team.getName()
         }
         null
     }

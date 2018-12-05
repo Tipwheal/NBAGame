@@ -33,7 +33,7 @@ class InitRunner implements ApplicationRunner {
                     BasketTeam team = new BasketTeam(name: name)
                     basketTeamDao.save(team)
             }
-            ["雷霆", "马刺"].each(createTeam)
+            ["雷霆", "马刺", "勇士", "火箭"].each(createTeam)
         }
     }
 }

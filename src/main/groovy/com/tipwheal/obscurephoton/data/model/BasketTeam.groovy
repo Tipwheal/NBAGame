@@ -19,5 +19,5 @@ class BasketTeam {
 
     @OneToMany
     @JoinColumn(name="team_id")
-    List<BasketPlayer> playerList
+    List<PlayerTeamRole> playerList
 }

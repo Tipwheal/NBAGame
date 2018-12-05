@@ -3,7 +3,6 @@ package com.tipwheal.obscurephoton.config
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import springfox.documentation.builders.ApiInfoBuilder
-import springfox.documentation.builders.ParameterBuilder
 import springfox.documentation.builders.RequestHandlerSelectors
 import springfox.documentation.service.ApiInfo
 import springfox.documentation.service.Contact
@@ -16,7 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2
 class Swagger2Config {
 
     @Bean
-    public Docket createRestApi() {
+    Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
@@ -24,7 +23,7 @@ class Swagger2Config {
                 .build()
     }
 
-    ApiInfo apiInfo() {
+    static ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("api")
                 .contact(new Contact("Tipwheal", "https://github.com/Tipwheal", "674714966@qq.com"))
